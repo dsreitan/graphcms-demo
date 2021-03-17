@@ -6,9 +6,9 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-const query = gql`
-  query GetPlaylists($stage: Stage!) {
-    playlists(stage: $stage) {
+const queryPublished = gql`
+  query GetPlaylists{
+    playlists(stage: PUBLISHED) {
       __typename
       stage
       id
@@ -27,30 +27,53 @@ const query = gql`
   }
 `
 
+const queryPreview = gql`
+  query GetPlaylists{
+    playlists(stage: PREVIEW) {
+      __typename
+      stage
+      id
+      localizations(includeCurrent: true){
+        locale
+        title
+      }
+      activities{
+        id
+        localizations(includeCurrent: true){
+          locale
+          title
+        }
+      }
+    }
+  }
+`
+const previewTask = client
+  .query({
+    query: queryPreview
+  });
+
+const publishedTask = client.query({
+  query: queryPublished
+})
+
 function App() {
 
   const [playlistsPreview, setPlaylistsPreview] = useState([]);
   const [playlistsPublished, setPlaylistsPublished] = useState([]);
 
-  client
-    .query({
-      query: query, variables: { stage: "PREVIEW" }
-    })
+  previewTask
     .then(result => {
-      console.log("PREVIEW", result)
-      if (result?.data?.playlists) {
+      if (result?.data?.playlists && playlistsPreview.length === 0) {
         setPlaylistsPreview(result.data.playlists)
+        console.log("PREVIEW", result.data.playlists)
       }
     });
 
-  client
-    .query({
-      query: query, variables: { stage: "PUBLISHED" }
-    })
+  publishedTask
     .then(result => {
-      console.log("PUBLISHED", result)
-      if (result?.data?.playlists) {
+      if (result?.data?.playlists && playlistsPublished.length === 0) {
         setPlaylistsPublished(result.data.playlists)
+        console.log("PUBLISHED", result.data.playlists)
       }
     });
 

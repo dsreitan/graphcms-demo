@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+main h2 {
+  text-align: center;
+  margin: 15px 0 0;
+}
+
+.playlist {
+  background-color: lightblue;
+  padding: 10px;
+  margin: 5px;
+}
+
+.activity {
+  background-color: lightcoral;
+  padding: 10px;
+  margin: 5px;
+}

@@ -1,23 +1,20 @@
 body {
-    margin: 0;
-}
-
-main {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    height:80vh;
+  margin: 0;
 }
 
 main h2 {
-    text-align: center;
+  text-align: center;
+  margin: 15px 0 0;
 }
 
 .playlist {
-    background-color: lightblue;
-    padding: 10px;
+  background-color: lightblue;
+  padding: 10px;
+  margin: 5px;
 }
 
 .activity {
-    background-color: lightcoral;
-    padding: 5px;
+  background-color: lightcoral;
+  padding: 10px;
+  margin: 5px;
 }
